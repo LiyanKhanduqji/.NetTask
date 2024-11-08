@@ -3,13 +3,16 @@ using Microsoft.AspNetCore.Mvc;
 using API.Entities;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers;
 
-[ApiController]
-[Route("api/[controller]")] // this means that the cotroller will be replaced with the first part of class name
-public class UsersController(DataContext context) : ControllerBase // localhost/api/users
+
+public class UsersController(DataContext context) : BaseApiController
 {
+
+    //allow access to a login or register without requiring authentication
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
     {
@@ -18,11 +21,12 @@ public class UsersController(DataContext context) : ControllerBase // localhost/
     }
 
     [HttpGet("{Id:int}")]
-    public async Task<ActionResult<AppUser>> GetUser(int id){
+    public async Task<ActionResult<AppUser>> GetUser(int id)
+    {
 
         var user = await context.Users.FindAsync(id);
 
-        if(user == null) return NotFound();
+        if (user == null) return NotFound();
         return user;
     }
 }
