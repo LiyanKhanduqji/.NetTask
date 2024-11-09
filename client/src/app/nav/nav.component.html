@@ -1,24 +1,28 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top">
   <div class="container">
-    <a class="navbar-brand" href="#">Carousel</a>
+    <a class="navbar-brand" href="/">
+      <img src="SkillCheck.svg" alt="Logo" width="200" height="100">
+    </a>
 
     @if (accountService.currentUser()) {
     <ul class="navbar-nav me-auto mb-2 mb-md-0">
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Home</a>
+        <a routerLink="/" class="nav-link active text-dark" aria-current="page">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a routerLink="/about" class="nav-link active text-dark" aria-current="page">About</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" aria-disabled="true">Disabled</a>
+        <a routerLink="/skills/skills-list" class="nav-link active text-dark" aria-current="page" href="#">Skils</a>
+      </li>
+      <li class="nav-item" (click)="logout()">
+        <a href="#" class="nav-link text-dark" aria-disabled="true">Logout</a>
       </li>
     </ul>
     } @if (accountService.currentUser()) {
     <div dropdown class="dropdown">
-      <a dropdownToggle href="#" class="dropdown-toggle text-light">Welcme</a>
+      <a dropdownToggle href="#" class="dropdown-toggle text-dark text-decoration-none">Welcme {{accountService.currentUser()?.username}}</a>
       <div *dropdownMenu class="dropdown-menu">
-        <a href="#" class="dropdown-item">Edit Profile</a>
         <a href="#" class="dropdown-item" (click)="logout()">Logout</a>
       </div>
     </div>
@@ -45,7 +49,7 @@
         type="password"
       />
 
-      <button class="btn btn-outline-success" type="submit">Login</button>
+      <button class="custom-button" type="submit">Login</button>
     </form>
     }
   </div>

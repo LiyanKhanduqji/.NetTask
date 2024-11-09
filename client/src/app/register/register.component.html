@@ -1,6 +1,5 @@
-<div>
-  <form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
-    <h2 class="text-center text-primary">Sign Up</h2>
+<form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
+    <h2>Sign Up</h2>
 
     <div class="my-3 form-floating">
       <input
@@ -25,29 +24,16 @@
       />
       <label for="password">Enter your Password</label>
     </div>
-
-    <div class="mb-3">
-      <label>who is your favourite user?</label>
-      <select class="form-select">
-        @for (user of usersFromHomeComponent(); track $index) {
-        <option [value]="user.userName">
-          {{ user.userName }}
-        </option>
-        }
-      </select>
-    </div>
-
     <div class="text-sm text-danger my-4">
       {{ errorMessages }}
     </div>
 
-    <div class="form-group text-center">
-      <button class="btn btn-success me-2" type="submit" (click)="register()">
+    <div class="form-group text-center d-flex gap-3 align-items-center">
+      <button class="custom-button" type="submit" (click)="register()">
         Register
       </button>
-      <button class="btn btn-default me-2" type="button" (click)="cancel()">
+      <button class="btn btn-default" type="button" (click)="cancel()">
         Cancel
       </button>
     </div>
   </form>
-</div>

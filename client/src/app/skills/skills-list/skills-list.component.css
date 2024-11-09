@@ -1,0 +1,67 @@
+/* Keyframe for fading in */
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply fade-in animation to skill cards */
+.skill-card {
+  opacity: 0;
+  animation: fadeInAnimation 1s forwards;
+}
+
+/* Create delayed animations for each skill card */
+.skill-card.delay-2s {
+  animation-delay: 2s;
+}
+
+.skill-card.delay-3s {
+  animation-delay: 3s;
+}
+
+.skill-card.delay-4s {
+  animation-delay: 4s;
+}
+
+.skill-card.delay-5s {
+  animation-delay: 5s;
+}
+
+.skill-card.delay-6s {
+  animation-delay: 6s;
+}
+
+.skill-card.delay-7s {
+  animation-delay: 7s;
+}
+
+.skill-card.delay-8s {
+  animation-delay: 8s;
+}
+
+.skill-card.delay-9s {
+  animation-delay: 9s;
+}
+
+.skill-card.delay-10s {
+  animation-delay: 10s;
+}
+
+.skill-card.delay-11s {
+  animation-delay: 11s;
+}
+
+h2, p {
+  opacity: 0;
+  animation: fadeInAnimation 1.5s forwards;
+}
+
+h2.animate__animated, p.animate__animated {
+  animation-delay: 1s;
+}

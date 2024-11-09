@@ -1,0 +1,46 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+
+.about-container {
+  background-color: #f8f9fa;
+  padding: 40px 0;
+}
+
+.about-header {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #7052c0;
+}
+
+.about-text {
+  font-size: 1.2rem;
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+.animate__fadeInUp {
+  animation-duration: 1s;
+}
+
+.animate__fadeIn {
+  animation-duration: 1s;
+}
+
+.animate__delay-1s {
+  animation-delay: 1s;
+}
+
+.animate__delay-2s {
+  animation-delay: 2s;
+}
+
+.animate__delay-3s {
+  animation-delay: 3s;
+}
+
+.animate__delay-4s {
+  animation-delay: 4s;
+}
+
+ul li i {
+  margin-right: 10px;
+}

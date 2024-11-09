@@ -1,15 +1,18 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RegisterComponent } from '../register/register.component';
 import { HttpClient } from '@angular/common/http';
+import { AccountService } from '../_services/account.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RegisterComponent],
+  imports: [RegisterComponent, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
+  accountService = inject(AccountService);
   cancelRegisterMode(event: boolean) {
     this.registerMode = event;
   }

@@ -1,1 +1,87 @@
 /* You can add global styles to this file, and also import other style files */
+.custom-button{
+  border: 1px solid #7052c0;
+  color: #7052c0;
+  width: 210px;
+  height: 40px;
+  position: relative;
+  z-index: 3;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  background-color: white;
+}
+.custom-button::before,
+.custom-button::after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background-color: #7052c0;
+  position: absolute;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.custom-button::before {
+  left: -30px;
+}
+.custom-button::after {
+  right: -30px;
+}
+.custom-button:hover::before {
+  z-index: -1;
+  animation: left-move 0.5s linear forwards;
+}
+.custom-button:hover::after {
+  z-index: -1;
+  animation: right-move 0.5s linear forwards;
+}
+.custom-button:hover {
+  color: white;
+  border: 2px solid white;
+  transition-delay: 0.5s;
+}
+@keyframes left-move {
+  50% {
+    left: 0;
+    width: 12px;
+    height: 12px;
+  }
+  100% {
+    left: 0;
+    border-radius: 0;
+    width: 50%;
+    height: 100%;
+  }
+}
+@keyframes right-move {
+  50% {
+    right: 0;
+    width: 12px;
+    height: 12px;
+  }
+  100% {
+    right: 0;
+    border-radius: 0;
+    width: 50%;
+    height: 100%;
+  }
+}
+.landing-image{
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px); /* Adjust the distance here */
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
