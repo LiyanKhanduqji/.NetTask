@@ -1,11 +1,5 @@
-<h1>{{ title }}</h1>
+<app-nav></app-nav>
 
-<ul>
-  <li *ngFor="let user of users">{{ user.id }}</li>
-</ul>
-
-<ul>
-  @for (user of users; track $index) {
-  <li>{{ user.id }}</li>
-  }
-</ul>
+<div class="container mt-5 pt-5">
+  <app-home></app-home>
+</div>

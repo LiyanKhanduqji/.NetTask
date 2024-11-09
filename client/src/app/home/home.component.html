@@ -1,0 +1,25 @@
+<div class="mt-4 container">
+  <div class="mx-auto text-cener">
+    @if (!registerMode) {
+    <h1 class="text-center">Find your match</h1>
+    <p class="text-center">all you need to do is login</p>
+    <div class="text-center">
+      <button class="btn btn-primary btn-lg me-2" (click)="registerToggle()">
+        Register
+      </button>
+      <button class="btn btn-primary btn-lg me-2">Learn More</button>
+    </div>
+    } @else {
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-4">
+          <app-register
+          [usersFromHomeComponent]="users"
+          (cancelRegister)= "cancelRegisterMode(false)"
+          ></app-register>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>

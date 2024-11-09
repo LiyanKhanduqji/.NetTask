@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">Carousel</a>
+
+    @if (accountService.currentUser()) {
+    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" aria-disabled="true">Disabled</a>
+      </li>
+    </ul>
+    } @if (accountService.currentUser()) {
+    <div dropdown class="dropdown">
+      <a dropdownToggle href="#" class="dropdown-toggle text-light">Welcme</a>
+      <div *dropdownMenu class="dropdown-menu">
+        <a href="#" class="dropdown-item">Edit Profile</a>
+        <a href="#" class="dropdown-item" (click)="logout()">Logout</a>
+      </div>
+    </div>
+    } @if (!accountService.currentUser()) {
+    <form
+      #loginForm="ngForm"
+      (submit)="login()"
+      class="d-flex"
+      autocomplete="off"
+    >
+      <input
+        name="Username"
+        [(ngModel)]="model.Username"
+        class="form-control me-2"
+        placeholder="Username"
+        aria-label="Username"
+      />
+      <input
+        name="password"
+        [(ngModel)]="model.password"
+        class="form-control me-2"
+        placeholder="Password"
+        aria-label="password"
+        type="password"
+      />
+
+      <button class="btn btn-outline-success" type="submit">Login</button>
+    </form>
+    }
+  </div>
+</nav>
