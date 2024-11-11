@@ -1,27 +1,45 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <img src="SkillCheck.svg" alt="Logo" width="200" height="100">
+      <img src="SkillCheck.svg" alt="Logo" width="200" height="100" />
     </a>
 
-    @if (accountService.currentUser()) {
     <ul class="navbar-nav me-auto mb-2 mb-md-0">
+      @if (accountService.currentUser()) {
       <li class="nav-item">
-        <a routerLink="/" class="nav-link active text-dark" aria-current="page">Home</a>
+        <a
+          routerLink="/members"
+          class="nav-link active text-dark"
+          aria-current="page"
+          routerLinkActive="active-nav-item"
+          >Matches</a
+        >
       </li>
       <li class="nav-item">
-        <a routerLink="/about" class="nav-link active text-dark" aria-current="page">About</a>
+        <a
+          routerLink="/lists"
+          class="nav-link active text-dark"
+          aria-current="page"
+          routerLinkActive="active-nav-item"
+          >Lists</a
+        >
       </li>
       <li class="nav-item">
-        <a routerLink="/skills/skills-list" class="nav-link active text-dark" aria-current="page" href="#">Skils</a>
+        <a
+          routerLink="/messages"
+          class="nav-link text-dark"
+          aria-disabled="true"
+          routerLinkActive="active-nav-item"
+          >Messages</a
+        >
       </li>
-      <li class="nav-item" (click)="logout()">
-        <a href="#" class="nav-link text-dark" aria-disabled="true">Logout</a>
-      </li>
+      }
     </ul>
-    } @if (accountService.currentUser()) {
+    @if (accountService.currentUser()) {
     <div dropdown class="dropdown">
-      <a dropdownToggle href="#" class="dropdown-toggle text-dark text-decoration-none">Welcme {{accountService.currentUser()?.username}}</a>
+      <a dropdownToggle class="dropdown-toggle text-dark text-decoration-none"
+        >Welcme {{ accountService.currentUser()?.username | titlecase}}</a
+      >
       <div *dropdownMenu class="dropdown-menu">
         <a href="#" class="dropdown-item" (click)="logout()">Logout</a>
       </div>
