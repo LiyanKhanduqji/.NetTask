@@ -1,15 +1,17 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace API.DTOs;
 
 public class RegisterDTO
 {
     [Required]
-    public required string username {get; set;}
+    public string username {get; set;} = string.Empty;
 
     [Required]
-    public required string password {get; set;}
+    [StringLength(8, MinimumLength =4)]
+    public required string password {get; set;} = string.Empty;
 
 }
 

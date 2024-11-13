@@ -1,0 +1,38 @@
+  .animated-button {
+    position: relative;
+    overflow: hidden;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: transparent;
+    border: 2px solid #7052c0;
+    color: #7052c0;
+    transition: 0.4s ease;
+  }
+
+  .animated-button:hover {
+    background-color: #7052c0;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  .animated-button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: #7052c0;
+    transition: all 0.4s ease;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .animated-button:hover::before {
+    width: 0;
+    height: 0;
+  }
