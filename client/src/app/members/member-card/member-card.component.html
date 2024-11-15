@@ -1,0 +1,27 @@
+<div class="profile-card mb-4">
+  <div class="like-icon-overlay" (click)="toggleLike(member().id)">
+    <div class="heart-container">
+      <i class="fa fa-heart heart-icon" [ngClass]="{ 'liked': isLiked(member().id) }"></i>
+    </div>
+  </div>
+
+  <div class="profile-card-header">
+    <img
+      src="{{ member().photoUrl }}"
+      alt="{{ member().knownAs }}"
+      class="profile-img"
+    />
+  </div>
+  <div class="profile-card-body">
+    <h5 class="profile-name text-center">
+      {{ member().knownAs }}
+    </h5>
+    <p class="profile-location text-center text-muted">
+      {{ member().city }}
+    </p>
+  </div>
+  <div class="profile-card-footer text-center">
+    <button class="btn btn-primary btn-animate">View Profile</button>
+    <button class="btn btn-outline-secondary btn-animate">Message</button>
+  </div>
+</div>
