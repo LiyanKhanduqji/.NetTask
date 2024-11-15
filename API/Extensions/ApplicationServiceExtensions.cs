@@ -25,8 +25,16 @@ public static class ApplicationServiceExtensions
         // use the interface and the implementation class
         services.AddScoped<ITokenService, TokenService>();
 
+
+        // registers UserRepository as the implementation for IUserRepository with a scoped lifetime
+        services.AddScoped<IUserRepository, UserRepository>();
+
+        // part allows AutoMapper to automatically detect all Profile classes across the project, simplifying setup.
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         return services;
     }
 
 }
 // services and config are just placeholders for builder.Services and builder.Configuration
+
+// UserRepository will be created for each HTTP request, and it will be used wherever IUserRepository is required in your application.

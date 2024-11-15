@@ -4,29 +4,42 @@ using API.Entities;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using API.Interfaces;
+using AutoMapper;
+using API.DTOs;
 
 namespace API.Controllers;
 
-
-public class UsersController(DataContext context) : BaseApiController
+[Authorize]
+//in order to use the repository : remove (DataContext context) and inject the Repo interface
+public class UsersController(IUserRepository userRepository) : BaseApiController
 {
 
     //allow access to a login or register without requiring authentication
-    [AllowAnonymous]
+    // [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
     {
-        var users = await context.Users.ToListAsync();
+        // var users = await context.Users.ToListAsync(); instead of this use:
+        // var users = await userRepository.GetUsersAsync(); instead of this 
+        var users = await userRepository.GetMembersAsyns();
+
+        // to use automapper
+        // var usersToReturn = mapper.Map<IEnumerable<MemberDto>>(users); no need for this cause the dto is filtered in the db level
         return Ok(users);
     }
 
-    [HttpGet("{Id:int}")]
-    public async Task<ActionResult<AppUser>> GetUser(int id)
+    // [HttpGet("{Id:int}")] instead of this use:
+    [HttpGet("{username}")]
+    public async Task<ActionResult<MemberDto>> GetUser(string username)
     {
 
-        var user = await context.Users.FindAsync(id);
+        // var user = await context.Users.FindAsync(id); instead of this use:
+        // var user = await userRepository.GetUserByUsernameAsync(username); instead of this:
+        var user = await userRepository.GetMemberAsync(username);
 
         if (user == null) return NotFound();
+        // return mapper.Map<MemberDto>(user);
         return user;
     }
 }

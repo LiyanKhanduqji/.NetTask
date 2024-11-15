@@ -21,23 +21,25 @@ public class AccountController(DataContext context, ITokenService tokenService) 
         if (await UserExists(registerDTO.username)) return BadRequest("User name is alraedy taken");
         // HMACSHA512 : used in encription
         // using : when hmac object is no longer needed when the method ends, it is automatically cleaned up and disposed of 
-        using var hmac = new HMACSHA512();
 
-        var user = new AppUser
-        {
-            userName = registerDTO.username.ToLower(),
-            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.password)),
-            PasswordSalt = hmac.Key
-        };
+        return Ok();
+        // using var hmac = new HMACSHA512();
 
-        context.Users.Add(user);
-        await context.SaveChangesAsync();
+        // var user = new AppUser
+        // {
+        //     userName = registerDTO.username.ToLower(),
+        //     PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.password)),
+        //     PasswordSalt = hmac.Key
+        // };
 
-        return new UserDTO
-        {
-            Username = user.userName,
-            Token = tokenService.CreateToken(user)
-        };
+        // context.Users.Add(user);
+        // await context.SaveChangesAsync();
+
+        // return new UserDTO
+        // {
+        //     Username = user.userName,
+        //     Token = tokenService.CreateToken(user)
+        // };
     }
 
     private async Task<bool> UserExists(string username)
