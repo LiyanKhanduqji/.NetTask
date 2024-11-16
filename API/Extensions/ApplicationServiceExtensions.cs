@@ -1,5 +1,6 @@
 using System;
 using API.Data;
+using API.Helpers;
 using API.Interfaces;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
@@ -29,8 +30,11 @@ public static class ApplicationServiceExtensions
         // registers UserRepository as the implementation for IUserRepository with a scoped lifetime
         services.AddScoped<IUserRepository, UserRepository>();
 
+        services.AddScoped<IPhotoService, PhotoService>();
+
         // part allows AutoMapper to automatically detect all Profile classes across the project, simplifying setup.
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
         return services;
     }
 

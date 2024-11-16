@@ -35,8 +35,10 @@ export class MembersService {
   updateMember(member: Member) {
     return this.http.put(this.baseUrl + 'users', member).pipe(
       tap(() => {
-        this.members.update((members) =>
-          members.map((m) => (m.userName === member.userName ? member : m))
+        this.members.update(
+          (
+            members // After the server confirms the update, the local state (members signal) is updated to reflect the changes, ensuring the app stays in sync with the server
+          ) => members.map((m) => (m.userName === member.userName ? member : m))
         );
       })
     );
@@ -56,3 +58,6 @@ export class MembersService {
 
 //A signal is a special variable that holds a value and automatically notifies any part of your app that depends on it whenever its value changes.
 // It's used to reactively manage data and ensure your app updates efficiently when the state changes.
+
+// The pipe function allows adding additional operations to the observable stream returned by http.put().
+// The tap operator performs a side effect (updating the local state) without changing the response from the observable.
