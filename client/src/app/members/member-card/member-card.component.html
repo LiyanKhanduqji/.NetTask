@@ -7,7 +7,7 @@
 
   <div class="profile-card-header">
     <img
-      src="{{ member().photoUrl }}"
+      src="{{member().photoUrl || './assets/user.png'}}"
       alt="{{ member().knownAs }}"
       class="profile-img"
     />

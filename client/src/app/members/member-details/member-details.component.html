@@ -1,1 +1,60 @@
-<p class="pt-5 mt-5 text-black">{{member?.knownAs}}</p>
+@if(member) {
+<div class="profile-page row">
+  <div class="floating-elements"></div>
+
+  <div class="profile-card mt-5 col-4">
+    <div class="profile-img-container">
+      <img
+        class="profile-img"
+        src="{{ member.photoUrl }}"
+        alt="{{ member.knownAs }}"
+      />
+    </div>
+
+    <div class="profile-info">
+      <h1 class="profile-name">{{ member.knownAs }}</h1>
+      <p class="profile-location">{{ member.city }}, {{ member.country }}</p>
+      <p class="profile-age">Age: {{ member.age }}</p>
+      <p class="profile-gender">Gender: {{ member.gender }}</p>
+      <p class="profile-last-active">Last Active: {{ member.lastActive }}</p>
+      <p class="profile-created-at">Joined: {{ member.created }}</p>
+    </div>
+
+    <div class="profile-footer">
+      <button class="btn btn-like">
+        <span class="heart-icon">&#10084;</span> Like
+      </button>
+
+      <button class="btn btn-outline">Message</button>
+    </div>
+  </div>
+
+  <div class="col-8 mt-5 tabs-section">
+    <tabset class="member-tabs">
+      <tab heading="About {{ member.knownAs }}">
+        <h4>Description</h4>
+        <p>{{ member.introduction }}</p>
+        <h4>Looking for</h4>
+        <p>{{ member.lookingFor }}</p>
+      </tab>
+      <tab heading="Skills">
+        <h4>Skills</h4>
+        <p>{{ member.skills }}</p>
+      </tab>
+
+      <tab heading="Photos" #photoTab="tab">
+        @if (photoTab.active) {
+            <gallery
+            [items]="images"
+            class="gallery"
+        ></gallery>
+        }
+    </tab>
+
+      <tab heading="Messages">
+        <h4>Messages will go here</h4>
+      </tab>
+    </tabset>
+  </div>
+</div>
+}
