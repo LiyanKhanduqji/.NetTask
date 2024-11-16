@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Authorization;
 using API.Interfaces;
 using AutoMapper;
 using API.DTOs;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace API.Controllers;
 
 [Authorize]
 //in order to use the repository : remove (DataContext context) and inject the Repo interface
-public class UsersController(IUserRepository userRepository) : BaseApiController
+public class UsersController(IUserRepository userRepository, IMapper mapper) : BaseApiController
 {
 
     //allow access to a login or register without requiring authentication
@@ -41,6 +43,22 @@ public class UsersController(IUserRepository userRepository) : BaseApiController
         if (user == null) return NotFound();
         // return mapper.Map<MemberDto>(user);
         return user;
+    }
+
+    [HttpPut]
+    public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
+    {
+        var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (username == null) return BadRequest("No username found in token");
+
+        var user = await userRepository.GetUserByUsernameAsync(username);
+
+        if (user == null) return BadRequest("Couldn't find user");
+
+        mapper.Map(memberUpdateDto, user);
+        if (await userRepository.SaveAllAsync()) return NoContent(); // return 200 type response (204)-> means successfully but there is no response
+
+        return BadRequest("Faild to Update the user");
     }
 }
 
