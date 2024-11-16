@@ -47,9 +47,10 @@
     @if (accountService.currentUser()) {
     <div dropdown class="dropdown">
       <a dropdownToggle class="dropdown-toggle text-dark text-decoration-none"
-        >Welcme {{ accountService.currentUser()?.username | titlecase}}</a
+        >Welcme {{ accountService.currentUser()?.username | titlecase }}</a
       >
       <div *dropdownMenu class="dropdown-menu">
+        <a routerLink="/member/edit" class="dropdown-item">Edit Profile</a>
         <a href="#" class="dropdown-item" (click)="logout()">Logout</a>
       </div>
     </div>

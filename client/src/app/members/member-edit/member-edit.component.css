@@ -1,12 +1,8 @@
-/* 1. Global Page Setup */
 .profile-page {
-  display: flex;
-  justify-content: space-around;
-  align-items: start;
-  max-width: 100%;
+  width: 100%;
   min-height: 100vh;
   background: linear-gradient(135deg, #6a11cb91, #2575fc91);
-  background-size: cover;
+  background-size: 300% 300%;
   animation: gradientShift 20s ease infinite;
   color: white;
   overflow: hidden;
@@ -28,7 +24,6 @@
   }
 }
 
-/* 2. Animated Background with Flowing Particles */
 .floating-elements {
   position: absolute;
   top: 0;
@@ -76,7 +71,6 @@
   }
 }
 
-/* 3. Profile Card */
 .profile-card {
   position: relative;
   z-index: 2;
@@ -91,7 +85,6 @@
   animation: fadeInUp 1.5s ease-out;
 }
 
-/* Profile Card Animation */
 @keyframes fadeInUp {
   0% {
     opacity: 0;
@@ -103,7 +96,6 @@
   }
 }
 
-/* 4. Profile Image - Floating Circle with Glowing Effect */
 .profile-img-container {
   position: relative;
   width: 150px;
@@ -122,7 +114,6 @@
   animation: float 4s ease-in-out infinite;
 }
 
-/* Image floating effect */
 @keyframes float {
   0% {
     transform: translateY(0);
@@ -163,7 +154,6 @@
   }
 }
 
-/* 5. Text and Info Animations */
 .profile-info {
   z-index: 2;
 }
@@ -202,7 +192,6 @@
   }
 }
 
-/* Hover Animation for Profile Info */
 .profile-name:hover,
 .profile-location:hover,
 .profile-age:hover,
@@ -214,7 +203,6 @@
   transition: all 0.3s ease;
 }
 
-/* 6. Bio Section with Gradient Overlay */
 .profile-bio {
   margin-top: 30px;
   padding: 20px;
@@ -236,7 +224,6 @@
   }
 }
 
-/* 7. Footer and Buttons with Circular Hover Effects */
 .profile-footer {
   display: flex;
   justify-content: center;
@@ -273,18 +260,6 @@
   transform: translateY(-3px);
 }
 
-/* Like Button and Animation */
-.btn-like {
-  background: transparent;
-  color: #6a11cb;
-  border: 2px solid #6a11cb;
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px
-}
-/* 7. Footer and Buttons with Circular Hover Effects */
 .profile-footer {
   display: flex;
   justify-content: center;
@@ -322,38 +297,6 @@
   transform: translateY(-3px);
 }
 
-/* Like Button with Heart Icon */
-.btn-like {
-  background: transparent;
-  color: #6a11cb;
-  border: 2px solid #6a11cb;
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 12px 20px;
-  font-size: 1rem;
-  border-radius: 25px;
-  cursor: pointer;
-  overflow: hidden;
-  transition: color 0.3s ease;
-}
-
-.btn-like .heart-icon {
-  font-size: 1.4rem;
-  color: transparent; /* Start with transparent color */
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.btn-like:hover {
-  color: #ff4081; /* Color change on hover */
-}
-
-.btn-like:hover .heart-icon {
-  color: #ff4081; /* Heart icon will turn pink on hover */
-  transform: scale(1.2); /* Slightly enlarge the heart on hover */
-}
 .tabs-section{
   position: relative;
   z-index: 2;
