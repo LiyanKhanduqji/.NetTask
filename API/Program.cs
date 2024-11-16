@@ -18,7 +18,7 @@ var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 
 // CORS middleware should be added before mapping controllers to endpoint to work
-app.UseCors(x => x.AllowAnyHeader().AllowAnyHeader().WithOrigins("http://localhost:4200", "https://localhost:4200"));
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:4200", "https://localhost:4200"));
 
 
 app.UseAuthentication();
