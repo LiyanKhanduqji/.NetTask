@@ -46,9 +46,12 @@
     </ul>
     @if (accountService.currentUser()) {
     <div dropdown class="dropdown">
-      <a dropdownToggle class="dropdown-toggle text-dark text-decoration-none"
-        >Welcme {{ accountService.currentUser()?.username | titlecase }}</a
-      >
+      <div class="d-flex align-center gap-2">
+        <img src="{{accountService.currentUser()?.photoUrl || './assets/user.png'}}" alt="user main photo" width="25" class="rounded-circle">
+        <a dropdownToggle class="dropdown-toggle text-dark text-decoration-none"
+          >Welcme {{ accountService.currentUser()?.username | titlecase }}</a
+        >
+      </div>
       <div *dropdownMenu class="dropdown-menu">
         <a routerLink="/member/edit" class="dropdown-item">Edit Profile</a>
         <a href="#" class="dropdown-item" (click)="logout()">Logout</a>

@@ -16,6 +16,8 @@ public class PhotoService : IPhotoService
 
         _cloudinary = new Cloudinary(acc);
     }
+
+    // Uploads a photo to Cloudinary.
     public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
     {
         var uploadResult = new ImageUploadResult();
@@ -37,6 +39,7 @@ public class PhotoService : IPhotoService
 
     public async Task<DeletionResult> DeletionResultphotoAsync(string publicId)
     {
+        // Deletes a photo from Cloudinary using its public ID
         var deleteParams = new DeletionParams(publicId);
         return await _cloudinary.DestroyAsync(deleteParams);
     }

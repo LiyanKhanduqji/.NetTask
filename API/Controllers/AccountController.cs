@@ -57,7 +57,7 @@ public class AccountController(DataContext context, ITokenService tokenService) 
         // Users.FirstOrDefaultAsync : if the user not found, return default value (null)
         // Users.FirstAsync : throw exception if the user doesn't exist
         // Users.SingleOrDefaultAsync : find only exist users, and throw exception if there is more than one element matches
-        var user = await context.Users.FirstOrDefaultAsync(x => x.userName == loginDTO.username.ToLower());
+        var user = await context.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.userName == loginDTO.username.ToLower());
 
         if (user == null) return Unauthorized("Invalid username");
 
@@ -74,7 +74,8 @@ public class AccountController(DataContext context, ITokenService tokenService) 
         return new UserDTO
         {
             Username = user.userName,
-            Token = tokenService.CreateToken(user)
+            Token = tokenService.CreateToken(user),
+            PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
         };
     }
 }

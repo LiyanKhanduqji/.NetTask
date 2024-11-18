@@ -44,6 +44,10 @@ export class MembersService {
     );
   }
 
+  setMainPhoto(photoId: number) {
+    return this.http.put(this.baseUrl + 'users/set-main-photo/' + photoId, {});
+  }
+
   getHttpOptions() {
     return {
       // creates an object containing the HTTP headers, specifically the Authorization header with a Bearer token.
