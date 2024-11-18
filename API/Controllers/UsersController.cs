@@ -100,6 +100,26 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
         if (await userRepository.SaveAllAsync()) return NoContent();
         return BadRequest("problem setting main photo");
     }
+
+    [HttpDelete("delete-photo/{photoId:int}")] // give the id constraint
+    public async Task<ActionResult> DeletePhoto(int photoId)
+    {
+        var user = await userRepository.GetUserByUsernameAsync(User.GetUsername());
+        if (user == null) return BadRequest("Couldn't find user");
+        var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+
+        if (photo == null || photo.IsMain) return BadRequest("Couldn't find photo");
+
+        if (photo.PublicId != null)
+        {
+            var result = await photoService.DeletionResultphotoAsync(photo.PublicId);
+            if (result.Error != null) return BadRequest(result.Error.Message);
+        }
+        user.Photos.Remove(photo);
+        if (await userRepository.SaveAllAsync()) return Ok();
+
+        return BadRequest("Couldn't delete photo");
+    }
 }
 
 //ordinary way to create costructor of the controller   
