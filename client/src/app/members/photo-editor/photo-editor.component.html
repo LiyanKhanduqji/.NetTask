@@ -1,7 +1,7 @@
-<div class="row">
+<div class="row justify-content-center">
   @for (photo of member().photos; track photo.id) {
-  <div class="col-2">
-    <img src="{{ photo.url }}" alt="photo of user" class="img-thumbnail mb-1" />
+  <div class="col-md-2 col-sm-12 mt-3 text-center">
+    <img src="{{ photo.url }}" alt="photo of user" class="img-thumbnail mb-2" width="150" />
     <div class="text-center">
       <button
         class="btn btn-sm me-1"
@@ -21,79 +21,37 @@
     </div>
   </div>
   }
-  <div class="row mt-5">
-    <div class="col-md-3">
-      <h3>Add Photos</h3>
 
+  <!-- Drag Box Section -->
+  <div class="row mt-5 justify-content-center">
+    <div class="col-md-6 text-center">
+      <h3>Add Photos</h3>
       <div
         ng2FileDrop
         [ngClass]="{ 'nv-file-over': hasBaseDropZoneOver }"
         (fileOver)="fileOverBase($event)"
         [uploader]="uploader"
-        class="card bg-faded p-5 text-center my-drop-zone"
+        class="card bg-light p-5 text-center my-drop-zone"
       >
-        <i class="fa fa-upload fa-3x"></i>
-        Drop photos here
+        <i class="fa fa-upload fa-3x text-muted"></i>
+        <p class="mt-3">Drop photos here</p>
       </div>
-    </div>
-
-    <div class="col-md-9" style="margin-bottom: 40px">
-      <h3>Upload queue</h3>
-      <p>Queue length: {{ uploader?.queue?.length }}</p>
-
-      <table class="table">
-        <thead>
-          <tr>
-            <th width="50%">Name</th>
-            <th>Size</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of uploader?.queue">
-            <td>
-              <strong>{{ item?.file?.name }}</strong>
-            </td>
-            <td *ngIf="uploader?.options?.isHTML5" nowrap>
-              {{ item?.file?.size / 1024 / 1024 | number : ".2" }} MB
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div>
-        <div>
-          Queue progress:
-          <div class="progress">
-            <div
-              class="progress-bar"
-              role="progressbar"
-              [ngStyle]="{ width: uploader?.progress + '%' }"
-            ></div>
-          </div>
-        </div>
+      <div class="mt-4">
         <button
           type="button"
-          class="btn btn-success btn-s"
+          class="btn btn-success me-2"
           (click)="uploader?.uploadAll()"
           [disabled]="!uploader?.getNotUploadedItems()?.length"
         >
-          <span class="fa fa-upload"></span> Upload all
+          <span class="fa fa-upload"></span> Upload All
         </button>
         <button
           type="button"
-          class="btn btn-warning btn-s"
+          class="btn btn-warning"
           (click)="uploader?.cancelAll()"
           [disabled]="!uploader?.isUploading"
         >
-          <span class="fa fa-ban"></span> Cancel all
-        </button>
-        <button
-          type="button"
-          class="btn btn-danger btn-s"
-          (click)="uploader?.clearQueue()"
-          [disabled]="!uploader?.queue?.length"
-        >
-          <span class="fa fa-trash"></span> Remove all
+          <span class="fa fa-ban"></span> Cancel All
         </button>
       </div>
     </div>
