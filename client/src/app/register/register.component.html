@@ -1,30 +1,72 @@
-<form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
+<!-- #registerForm="ngForm" replace it with formGroup because reactive form -->
+<form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
   <h2>Sign Up</h2>
 
-  <div class="my-3 form-floating">
-    <input
-      type="text"
-      name="Username"
-      id="username"
-      [(ngModel)]="model.username"
-      placeholder="Username"
-      class="form-control"
-    />
-    <label for="username">Enter your username</label>
+  <div class="my-3">
+    <label>I am a:</label>
+    <label class="form-check-label ms-3">
+      <input
+        type="radio"
+        class="form-check-input"
+        value="male"
+        formControlName="gender"
+      />
+      Male
+    </label>
+    <label class="form-check-label ms-3">
+      <input
+        type="radio"
+        class="form-check-input"
+        value="female"
+        formControlName="gender"
+      />
+      Female
+    </label>
   </div>
 
-  <div class="mb-3 form-floating">
-    <input
-      type="password"
-      name="password"
-      id="password"
-      [(ngModel)]="model.password"
-      placeholder="Password"
-      class="form-control"
-    />
-    <label for="password">Enter your Password</label>
-  </div>
+  <app-text-input
+    [formControl]="$any(registerForm.controls['username'])"
+    [label]="'Username'"
+  >
+  </app-text-input>
 
+  <app-text-input
+    [formControl]="$any(registerForm.controls['knownAs'])"
+    [label]="'Known as'"
+  >
+  </app-text-input>
+
+  <app-date-picker
+    [formControl]="$any(registerForm.controls['dateOfBirth'])"
+    [label]="'Date of birth'"
+    [maxDate]="maxDate"
+  >
+  </app-date-picker>
+
+  <app-text-input
+    [formControl]="$any(registerForm.controls['city'])"
+    [label]="'City'"
+  >
+  </app-text-input>
+
+  <app-text-input
+    [formControl]="$any(registerForm.controls['country'])"
+    [label]="'country'"
+  >
+  </app-text-input>
+
+  <app-text-input
+    [formControl]="$any(registerForm.controls['password'])"
+    [label]="'Password'"
+    type="password"
+  >
+  </app-text-input>
+  <app-text-input
+    [formControl]="$any(registerForm.controls['confirmPassword'])"
+    [label]="'Confirm Password'"
+    type="password"
+  >
+  </app-text-input>
   <div class="form-group text-center d-flex gap-3 align-items-center">
     <button class="custom-button" type="submit" (click)="register()">
       Register

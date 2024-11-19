@@ -1,0 +1,25 @@
+<div class="mb-3 form-floating">
+  <input
+    [class.is-invalid]="control.touched && control.invalid"
+    [type]="type()"
+    [formControl]="control"
+    placeholder="{{ label() }}"
+    class="form-control"
+  />
+  <label for="password">{{ label() }}</label>
+  <div *ngIf="control.hasError('required')" class="invalid-feedback text-start">
+    Please enter a {{ label() }}
+  </div>
+  <div
+    *ngIf="control.hasError('minlength')"
+    class="invalid-feedback text-start"
+  >
+    {{ label() }} must at least be {{control.errors?.['minlength']}} chars
+  </div>
+  <div
+    *ngIf="control.hasError('isMatching')"
+    class="invalid-feedback text-start"
+  >
+    {{ label() }} aren't matched
+  </div>
+</div>
