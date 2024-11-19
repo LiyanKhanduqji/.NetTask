@@ -66,9 +66,23 @@
     [label]="'Confirm Password'"
     type="password"
   >
+    @if(validationErrors){
+    <div class="alert alert-danger text-start">
+      <ul>
+        @for (error of validationErrors; track $index) {
+        <li>{{ error }}</li>
+        }
+      </ul>
+    </div>
+    }
   </app-text-input>
   <div class="form-group text-center d-flex gap-3 align-items-center">
-    <button class="custom-button" type="submit" (click)="register()">
+    <button
+      [disabled]="!registerForm.valid"
+      class="custom-button"
+      type="submit"
+      (click)="register()"
+    >
       Register
     </button>
     <button class="btn btn-default" type="button" (click)="cancel()">
