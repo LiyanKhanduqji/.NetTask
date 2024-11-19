@@ -32,6 +32,7 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup = new FormGroup({});
   maxDate = new Date();
   validationErrors: string[] | undefined;
+  isSubmitting = false;
 
   ngOnInit(): void {
     this.initializeForm();
@@ -74,15 +75,21 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
+    if (this.isSubmitting) return;
+
+    this.isSubmitting = true;
     const dob = this.getDateOnly(this.registerForm.get('dateOfBirth')?.value);
     this.registerForm.patchValue({ dateOfBirth: dob });
     this.accountService.register(this.registerForm.value).subscribe({
       next: (_) => {
         this.router.navigateByUrl('/');
-        this.cancel()
+        this.cancel();
       },
       error: (error) => {
         this.validationErrors = error;
+      },
+      complete: () => {
+        this.isSubmitting = false;
       },
     });
   }

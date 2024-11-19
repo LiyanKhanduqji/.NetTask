@@ -78,7 +78,7 @@
   </app-text-input>
   <div class="form-group text-center d-flex gap-3 align-items-center">
     <button
-      [disabled]="!registerForm.valid"
+    [disabled]="registerForm.invalid || isSubmitting"
       class="custom-button"
       type="submit"
       (click)="register()"
