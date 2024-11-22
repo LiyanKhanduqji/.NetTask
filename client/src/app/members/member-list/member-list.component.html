@@ -15,7 +15,7 @@
           class="form-control ms-1"
           style="width: 70px"
           name="minAge"
-          [(ngModel)]="userParams.minAge"
+          [(ngModel)]="memberService.userParams().minAge"
         />
       </div>
 
@@ -26,7 +26,7 @@
           class="form-control ms-1"
           style="width: 70px"
           name="maxAge"
-          [(ngModel)]="userParams.maxAge"
+          [(ngModel)]="memberService.userParams().maxAge"
         />
       </div>
 
@@ -36,7 +36,7 @@
           name="gender"
           style="width: 130px"
           class="form-se;ect ms-1"
-          [(ngModel)]="userParams.gender"
+          [(ngModel)]="memberService.userParams().gender"
         >
           @for (gender of genderList; track gender.value) {
           <option [value]="gender.value">
@@ -59,8 +59,8 @@
           (click)="loadMembers()"
           btnRadio="lastActive"
           class="btn sort-btn"
-          [class.selected]="userParams.orderBy === 'lastActive'"
-          [(ngModel)]="userParams.orderBy"
+          [class.selected]="memberService.userParams().orderBy === 'lastActive'"
+          [(ngModel)]="memberService.userParams().orderBy"
         >
           Last Active
         </button>
@@ -70,8 +70,8 @@
           (click)="loadMembers()"
           btnRadio="created"
           class="btn sort-btn"
-          [class.selected]="userParams.orderBy === 'created'"
-          [(ngModel)]="userParams.orderBy"
+          [class.selected]="memberService.userParams().orderBy === 'created'"
+          [(ngModel)]="memberService.userParams().orderBy"
         >
           Newest Members
         </button>
