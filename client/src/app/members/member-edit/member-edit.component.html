@@ -27,8 +27,12 @@
         <p class="profile-location">{{ member.city }}, {{ member.country }}</p>
         <p class="profile-age">Age: {{ member.age }}</p>
         <p class="profile-gender">Gender: {{ member.gender }}</p>
-        <p class="profile-last-active">Last Active: {{ member.lastActive }}</p>
-        <p class="profile-created-at">Joined: {{ member.created }}</p>
+        <p class="profile-last-active">
+          Last Active: {{ member.lastActive | timeago }}
+        </p>
+        <p class="profile-created-at">
+          Joined: {{ member.created | date : "longDate" }}
+        </p>
       </div>
     </div>
 

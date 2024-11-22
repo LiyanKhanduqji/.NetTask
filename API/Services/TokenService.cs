@@ -23,7 +23,8 @@ public class TokenService(IConfiguration config) : ITokenService
         // Define Claims : allows the server to recognize the user by his username
         var claims = new List<Claim>
         {
-            new(ClaimTypes.NameIdentifier, user.userName)
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new(ClaimTypes.Name, user.userName)
         };
 
         // SigningCredentials are created using the security key and the HMAC SHA512 encryption algorithm.
