@@ -1,0 +1,83 @@
+form {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  margin: 30px auto;
+  color: white;
+  width: 60%;
+}
+
+form .col-form-label {
+  font-weight: bold;
+  font-size: 16px;
+  color: white;
+  margin-right: 10px;
+}
+
+form .form-control,
+form select {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  color: white;
+  padding: 8px 15px;
+  font-size: 14px;
+  transition: all 0.3s ease-in-out;
+}
+
+form .form-control:hover,
+form select:hover {
+  border-color: #9cc1ff;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+form button {
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  margin-top: 10px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+}
+
+form .btn-primary {
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  color: white;
+}
+
+form .btn-primary:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #feb47b, #ff7e5f);
+}
+
+form .btn-info {
+  background: linear-gradient(135deg, #43cea2, #185a9d);
+  color: white;
+}
+
+form .btn-info:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #185a9d, #43cea2);
+}
+
+form .d-flex {
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+form .d-flex > * {
+  flex: 1 1 auto;
+  min-width: 100px;
+}
+
+form button:active {
+  transform: scale(0.95);
+}
+
+form:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(106, 17, 203, 0.6);
+}
