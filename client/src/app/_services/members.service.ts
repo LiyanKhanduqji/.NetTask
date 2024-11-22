@@ -1,4 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpParams,
+  HttpRequest,
+  HttpResponse,
+} from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Member } from '../_models/member';
@@ -15,8 +20,11 @@ export class MembersService {
   baseUrl = environment.apiUrl;
   // members = signal<Member[]>([]); remove it cause everything will be stored in paginatedResult
   paginatedResult = signal<PaginatedResult<Member[]> | null>(null);
+  memberCache = new Map();
 
   getMembers(userParams: UserParams) {
+    const response = this.memberCache.get(Object.values(userParams).join('-'));
+    if (response) return this.setPaginatedResponse(response);
     let params = this.setPaginationHeaders(
       userParams.pageNumber,
       userParams.pageSize
@@ -36,14 +44,18 @@ export class MembersService {
       .subscribe({
         // next: (members) => this.members.set(members),
         next: (response) => {
-          this.paginatedResult.set({
-            items: response.body as Member[],
-            pagination: JSON.parse(response.headers.get('pagination')!),
-          });
+          this.setPaginatedResponse(response);
+          this.memberCache.set(Object.values(userParams).join('-'), response);
         },
       });
   }
 
+  private setPaginatedResponse(response: HttpResponse<Member[]>) {
+    this.paginatedResult.set({
+      items: response.body as Member[],
+      pagination: JSON.parse(response.headers.get('pagination')!),
+    });
+  }
   private setPaginationHeaders(pageNumber: number, pageSize: number) {
     let params = new HttpParams();
 
