@@ -69,6 +69,10 @@ export class MembersService {
   getMember(username: string) {
     // const member = this.members().find((x) => x.userName == username);
     // if (member !== undefined) return of(member); // this will return the member as observable
+    const member: Member = [...this.memberCache.values()]
+      .reduce((arr, elem) => arr.concat(elem.body), [])
+      .find((m: Member) => m.userName === username);
+    if (member) return of(member);
     return this.http.get<Member>(
       this.baseUrl + 'users/' + username
       // this.getHttpOptions() no need, jwt interceptor handles this
