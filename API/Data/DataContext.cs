@@ -9,7 +9,31 @@ namespace API.Data;
 public class DataContext(DbContextOptions options) : DbContext(options)
 {
         public DbSet<AppUser> Users { get; set; }
+        public DbSet<UserLike> Likes { get; set; }
+
+        // method defines the many-to-many relationship between AppUser and UserLike
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+                base.OnModelCreating(builder);
+
+                // defines a primary key combining SourceUserId and TargetUserId. This ensures each "like" is unique
+                builder.Entity<UserLike>()
+                .HasKey(k => new { k.SourceUserId, k.TargetUserId });
+
+                builder.Entity<UserLike>()
+                .HasOne(s => s.SourceUser)
+                .WithMany(l => l.LikedUsers)
+                .HasForeignKey(s => s.SourceUserId)
+                .OnDelete(DeleteBehavior.Cascade); //ensures likes are deleted if the user is removed
+
+                builder.Entity<UserLike>()
+                .HasOne(s => s.TargetUser)
+                .WithMany(l => l.LikedByUsers)
+                .HasForeignKey(s => s.TargetUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
 }
+
 
 
 // ordinary way to define the constructor in order to pass optione to the parent class : 
