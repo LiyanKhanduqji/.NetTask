@@ -3,6 +3,7 @@
 using System;
 using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -20,11 +21,19 @@ public class UserRepository(DataContext context, IMapper mapper) : IUserReposito
         .SingleOrDefaultAsync(); // Returns the single matching user or null if no match is found.
     }
 
-    public async Task<IEnumerable<MemberDto>> GetMembersAsyns()
+    public async Task<PagedList<MemberDto>> GetMembersAsyns(UserParams userParams)
     {
-        return await context.Users
-        .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
-        .ToListAsync();
+        // return await context.Users
+        // .Take(5) //Selects the first 5 records from the query result.
+        // .Skip(5) // Skips the first 5 records and starts returning data from the 6th record onward.
+        // .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
+        // .ToListAsync(); now instead of this we will use PagedList Class :
+
+        //Access users yable and ensures only the necessary data (fields in MemberDto) is fetched
+        var query = context.Users.ProjectTo<MemberDto>(mapper.ConfigurationProvider);
+        return await PagedList<MemberDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+
+
     }
 
     // methods returns a Task<AppUser?> because it is asynchronous. If no user is found with the given ID, it will return null

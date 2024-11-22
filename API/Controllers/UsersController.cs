@@ -10,6 +10,7 @@ using API.DTOs;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http.HttpResults;
 using API.Extensions;
+using API.Helpers;
 
 namespace API.Controllers;
 
@@ -21,11 +22,13 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
     //allow access to a login or register without requiring authentication
     // [AllowAnonymous]
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+    public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers([FromQuery] UserParams userParams)
     {
         // var users = await context.Users.ToListAsync(); instead of this use:
         // var users = await userRepository.GetUsersAsync(); instead of this 
-        var users = await userRepository.GetMembersAsyns();
+        var users = await userRepository.GetMembersAsyns(userParams);
+
+        Response.AddPaginationHeader(users);
 
         // to use automapper
         // var usersToReturn = mapper.Map<IEnumerable<MemberDto>>(users); no need for this cause the dto is filtered in the db level
@@ -78,7 +81,7 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
             PublicId = result.PublicId
         };
 
-        if(user.Photos.Count == 0) photo.IsMain =
+        if (user.Photos.Count == 0) photo.IsMain = true;
 
         user.Photos.Add(photo);
 
