@@ -32,6 +32,8 @@ public static class ApplicationServiceExtensions
 
         services.AddScoped<IPhotoService, PhotoService>();
 
+        services.AddScoped<LogUserActivity>();
+        
         // part allows AutoMapper to automatically detect all Profile classes across the project, simplifying setup.
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
