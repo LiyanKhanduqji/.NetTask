@@ -30,8 +30,18 @@ public class UserRepository(DataContext context, IMapper mapper) : IUserReposito
         // .ToListAsync(); now instead of this we will use PagedList Class :
 
         //Access users yable and ensures only the necessary data (fields in MemberDto) is fetched
-        var query = context.Users.ProjectTo<MemberDto>(mapper.ConfigurationProvider);
-        return await PagedList<MemberDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+        var query = context.Users.AsQueryable();
+        query = query.Where(x => x.userName != userParams.CurrentUsername);
+        if (userParams.Gender != null)
+        {
+            query = query.Where(x => x.Gender == userParams.Gender);
+        }
+
+        var minDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MaxAge - 1));
+        var MaxDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MinAge));
+
+        query = query.Where(x => x.DateOfBirth >= minDob && x.DateOfBirth <= MaxDob);
+        return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(mapper.ConfigurationProvider), userParams.PageNumber, userParams.PageSize);
 
 
     }

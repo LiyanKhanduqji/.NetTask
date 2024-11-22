@@ -25,7 +25,8 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers([FromQuery] UserParams userParams)
     {
         // var users = await context.Users.ToListAsync(); instead of this use:
-        // var users = await userRepository.GetUsersAsync(); instead of this 
+        // var users = await userRepository.GetUsersAsync(); instead of this
+        userParams.CurrentUsername = User.GetUsername();
         var users = await userRepository.GetMembersAsyns(userParams);
 
         Response.AddPaginationHeader(users);
