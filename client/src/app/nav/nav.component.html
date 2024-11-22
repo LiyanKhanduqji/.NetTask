@@ -47,9 +47,16 @@
     @if (accountService.currentUser()) {
     <div dropdown class="dropdown">
       <div class="d-flex align-center gap-2">
-        <img src="{{accountService.currentUser()?.photoUrl || './assets/user.png'}}" alt="user main photo" width="25" class="rounded-circle">
+        <img
+          src="{{
+            accountService.currentUser()?.photoUrl || './assets/user.png'
+          }}"
+          alt="user main photo"
+          width="25"
+          class="rounded-circle"
+        />
         <a dropdownToggle class="dropdown-toggle text-dark text-decoration-none"
-          >Welcme {{ accountService.currentUser()?.username | titlecase }}</a
+          >Welcme {{ accountService.currentUser()?.knownAs }}</a
         >
       </div>
       <div *dropdownMenu class="dropdown-menu">
