@@ -48,6 +48,33 @@
 
       <button class="btn btn-primary ms-1" type="submit">Apply</button>
       <button (click)="resetFilters()" class="btn btn-info ms-1">Reset</button>
+
+      <div class="d-flex mx-2 justify-content-center align-items-center sort-by">
+        <label class="sort-by-label me-3">Sort By:</label>
+        <button
+          type="button"
+          name="orderBy"
+          (click)="loadMembers()"
+          btnRadio="lastActive"
+          class="btn sort-btn"
+          [class.selected]="userParams.orderBy === 'lastActive'"
+          [(ngModel)]="userParams.orderBy"
+        >
+          Last Active
+        </button>
+        <button
+          type="button"
+          name="orderBy"
+          (click)="loadMembers()"
+          btnRadio="created"
+          class="btn sort-btn"
+          [class.selected]="userParams.orderBy === 'created'"
+          [(ngModel)]="userParams.orderBy"
+        >
+          Newest Members
+        </button>
+      </div>
+
     </form>
   </div>
 </div>

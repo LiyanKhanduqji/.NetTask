@@ -1,83 +1,113 @@
 form {
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
-  padding: 10px;
+  background-color: #f7f7f7;
+  padding: 20px;
   border-radius: 15px;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-  margin: 30px auto;
-  color: white;
-  width: 60%;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+form .d-flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 form .col-form-label {
   font-weight: bold;
-  font-size: 16px;
-  color: white;
-  margin-right: 10px;
+  font-size: 14px;
+  color: #333;
 }
 
 form .form-control,
 form select {
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 2px solid transparent;
-  border-radius: 8px;
-  color: white;
-  padding: 8px 15px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px 10px;
   font-size: 14px;
-  transition: all 0.3s ease-in-out;
+  color: #333;
 }
 
-form .form-control:hover,
-form select:hover {
-  border-color: #9cc1ff;
-  background-color: rgba(255, 255, 255, 0.2);
+form .form-control:focus,
+form select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 form button {
-  font-size: 16px;
-  padding: 10px 20px;
-  border-radius: 8px;
+  font-size: 14px;
+  padding: 8px 15px;
+  border-radius: 5px;
   border: none;
-  margin-top: 10px;
-  transition: transform 0.3s ease, background-color 0.3s ease;
   cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 form .btn-primary {
-  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  background-color: #007bff;
   color: white;
 }
 
 form .btn-primary:hover {
-  transform: scale(1.05);
-  background: linear-gradient(135deg, #feb47b, #ff7e5f);
+  background-color: #0056b3;
 }
 
 form .btn-info {
-  background: linear-gradient(135deg, #43cea2, #185a9d);
+  background-color: #17a2b8;
   color: white;
 }
 
 form .btn-info:hover {
-  transform: scale(1.05);
-  background: linear-gradient(135deg, #185a9d, #43cea2);
+  background-color: #117a8b;
 }
 
-form .d-flex {
+.sort-by {
+  display: flex;
   align-items: center;
-  margin-bottom: 15px;
-  gap: 20px;
-  flex-wrap: wrap;
+  gap: 15px;
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  margin-top: 20px;
 }
 
-form .d-flex > * {
-  flex: 1 1 auto;
-  min-width: 100px;
+.sort-by-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
 }
 
-form button:active {
-  transform: scale(0.95);
+.sort-btn {
+  background-color: transparent;
+  border: 2px solid #007bff;
+  color: #007bff;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
 }
 
-form:hover {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(106, 17, 203, 0.6);
+.sort-btn:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  border-color: #0056b3;
+}
+
+.sort-btn.selected {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+  cursor: default;
+}
+
+.sort-btn:active {
+  transform: scale(0.97);
 }
