@@ -13,12 +13,12 @@ public class LikesRepository(DataContext context, IMapper mapper) : ILikeReposit
 {
     public void AddLike(UserLike like)
     {
-        context.Likes.Add(like);
+        context.Likes?.Add(like);
     }
 
     public void DeleteLike(UserLike like)
     {
-        context.Likes.Remove(like);
+        context.Likes?.Remove(like);
     }
 
     public async Task<IEnumerable<int>> GetCurrentUserLikeIds(int currentUserId)
@@ -36,7 +36,7 @@ public class LikesRepository(DataContext context, IMapper mapper) : ILikeReposit
 
     public async Task<PagedList<MemberDto>> GetUserLikes(LikesParams likesParams)
     {
-        var likes = context.Likes.AsQueryable();
+        var likes = context.Likes?.AsQueryable();
         IQueryable<MemberDto> query;
 
         switch (likesParams.Predicate)

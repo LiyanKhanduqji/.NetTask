@@ -48,7 +48,9 @@ public class AccountController(DataContext context, ITokenService tokenService, 
     private async Task<bool> UserExists(string username)
     {
         //x represents each individual user in the Users collection within context
-        return await context.Users.AnyAsync(x => x.UserName.ToLower() == username.ToLower());
+        return await context.Users.AnyAsync(x => x.NormalizedUserName == username.ToUpper());
+
+        // ASP.NET Identity adds normalized versions of certain fields like the username and email (NormalizedUserName and NormalizedEmail). These fields are pre-stored in an uppercase format in the database
     }
 
 
@@ -62,7 +64,7 @@ public class AccountController(DataContext context, ITokenService tokenService, 
         // Users.SingleOrDefaultAsync : find only exist users, and throw exception if there is more than one element matches
         var user = await context.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.UserName == loginDTO.username.ToLower());
 
-        if (user == null) return Unauthorized("Invalid username");
+        if (user == null || user.UserName == null) return Unauthorized("Invalid username");
 
         return new UserDTO
         {

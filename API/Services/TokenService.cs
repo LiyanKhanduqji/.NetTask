@@ -20,6 +20,8 @@ public class TokenService(IConfiguration config) : ITokenService
         // TokenKey string is converted into bytes and wrapped in a SymmetricSecurityKey
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey));
 
+        if (user.UserName == null) throw new Exception("No username for user!");
+
         // Define Claims : allows the server to recognize the user by his username
         var claims = new List<Claim>
         {

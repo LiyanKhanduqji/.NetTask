@@ -16,7 +16,7 @@ public class UserRepository(DataContext context, IMapper mapper) : IUserReposito
     public async Task<MemberDto?> GetMemberAsync(string username)
     {
         return await context.Users
-        .Where(x => x.userName == username) // Filters users to match the given username.
+        .Where(x => x.UserName == username) // Filters users to match the given username.
         .ProjectTo<MemberDto>(mapper.ConfigurationProvider) // Maps the entity to a MemberDto.
         .SingleOrDefaultAsync(); // Returns the single matching user or null if no match is found.
     }
@@ -31,7 +31,7 @@ public class UserRepository(DataContext context, IMapper mapper) : IUserReposito
 
         //Access users yable and ensures only the necessary data (fields in MemberDto) is fetched
         var query = context.Users.AsQueryable();
-        query = query.Where(x => x.userName != userParams.CurrentUsername);
+        query = query.Where(x => x.UserName != userParams.CurrentUsername);
         if (userParams.Gender != null)
         {
             query = query.Where(x => x.Gender == userParams.Gender);
@@ -67,7 +67,7 @@ public class UserRepository(DataContext context, IMapper mapper) : IUserReposito
         // This query is different from the FindAsync because it’s not using the primary key (id). Instead, it searches based on a non-primary key field (userName). This makes it less optimized than FindAsync and involves querying the database with a condition.
         return await context.Users.
         Include(x => x.Photos). // exiplicity tell the method to return related entity
-        SingleOrDefaultAsync(x => x.userName == username);
+        SingleOrDefaultAsync(x => x.UserName == username);
     }
 
     public async Task<IEnumerable<AppUser>> GetUsersAsync()
