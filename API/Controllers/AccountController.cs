@@ -20,16 +20,11 @@ public class AccountController(DataContext context, ITokenService tokenService, 
 
 
         if (await UserExists(registerDTO.username)) return BadRequest("User name is alraedy taken");
-        // HMACSHA512 : used in encription
-        // using : when hmac object is no longer needed when the method ends, it is automatically cleaned up and disposed of 
-
         using var hmac = new HMACSHA512();
 
         var user = mapper.Map<AppUser>(registerDTO);
 
-        user.userName = registerDTO.username.ToLower();
-        user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.password));
-        user.PasswordSalt = hmac.Key;
+        user.UserName = registerDTO.username.ToLower();
 
         // var user = new AppUser
         // {
@@ -43,7 +38,7 @@ public class AccountController(DataContext context, ITokenService tokenService, 
 
         return new UserDTO
         {
-            Username = user.userName,
+            Username = user.UserName,
             Token = tokenService.CreateToken(user),
             KnownAs = user.KnownAs,
             Gender = user.Gender
@@ -53,7 +48,7 @@ public class AccountController(DataContext context, ITokenService tokenService, 
     private async Task<bool> UserExists(string username)
     {
         //x represents each individual user in the Users collection within context
-        return await context.Users.AnyAsync(x => x.userName.ToLower() == username.ToLower());
+        return await context.Users.AnyAsync(x => x.UserName.ToLower() == username.ToLower());
     }
 
 
@@ -65,23 +60,13 @@ public class AccountController(DataContext context, ITokenService tokenService, 
         // Users.FirstOrDefaultAsync : if the user not found, return default value (null)
         // Users.FirstAsync : throw exception if the user doesn't exist
         // Users.SingleOrDefaultAsync : find only exist users, and throw exception if there is more than one element matches
-        var user = await context.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.userName == loginDTO.username.ToLower());
+        var user = await context.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.UserName == loginDTO.username.ToLower());
 
         if (user == null) return Unauthorized("Invalid username");
 
-        using var hmac = new HMACSHA512(user.PasswordSalt);
-
-        var ComputeHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDTO.password));
-
-        for (int i = 0; i < ComputeHash.Length; i++)
-        {
-            if (ComputeHash[i] != user.PasswordHash[i])
-                return Unauthorized("Invalid Password");
-        }
-
         return new UserDTO
         {
-            Username = user.userName,
+            Username = user.UserName,
             KnownAs = user.KnownAs,
             Token = tokenService.CreateToken(user),
             PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,

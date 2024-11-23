@@ -1,20 +1,35 @@
 // DataContext file in Entity Framework (EF) serves as the bridge between the application’s code and the database. It inherits from DbContext
 using System;
 using API.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
 
 // This represents peimary constructor 
-public class DataContext(DbContextOptions options) : DbContext(options)
+public class DataContext(DbContextOptions options) : IdentityDbContext<AppUser, AppRole, int,
+        IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>,
+        IdentityRoleClaim<int>, IdentityUserToken<int>>(options)
 {
-        public DbSet<AppUser> Users { get; set; }
-        public DbSet<UserLike> Likes { get; set; }
+        public DbSet<UserLike>? Likes { get; set; }
 
         // method defines the many-to-many relationship between AppUser and UserLike
         protected override void OnModelCreating(ModelBuilder builder)
         {
                 base.OnModelCreating(builder);
+
+                builder.Entity<AppUser>()
+                .HasMany(ur => ur.UserRoles) //Specifies that each AppUser can have many AppUserRole
+                .WithOne(u => u.User) // each record in the AppUserRole table is linked to exactly one AppUser
+                .HasForeignKey(ur => ur.UserId) // Defines that the UserId property in AppUserRole is the foreign key referencing the AppUser table.
+                .IsRequired(); // a user must have associated roles
+
+                builder.Entity<AppRole>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.Role)
+                .HasForeignKey(ur => ur.RoleId)
+                .IsRequired();
 
                 // defines a primary key combining SourceUserId and TargetUserId. This ensures each "like" is unique
                 builder.Entity<UserLike>()

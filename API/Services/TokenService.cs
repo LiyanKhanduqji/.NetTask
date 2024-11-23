@@ -24,7 +24,7 @@ public class TokenService(IConfiguration config) : ITokenService
         var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new(ClaimTypes.Name, user.userName)
+            new(ClaimTypes.Name, user.UserName)
         };
 
         // SigningCredentials are created using the security key and the HMAC SHA512 encryption algorithm.

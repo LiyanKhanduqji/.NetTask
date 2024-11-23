@@ -25,12 +25,9 @@ public class Seed
             using var hmac = new HMACSHA512();
 
             // Ensures consistency in how usernames are stored.
-            user.userName = user.userName.ToLower();
+            user.UserName = user.UserName.ToLower();
 
             // Sets each user’s password hash (PasswordHash) and salt (PasswordSalt) based on the text "Pa$$w0rd"
-            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("Pa$$w0rd"));
-            user.PasswordSalt = hmac.Key;
-
             // Adds each user to the Users table in the databas
             context.Users.Add(user);
         }

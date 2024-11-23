@@ -88,7 +88,7 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
 
         if (await userRepository.SaveAllAsync())
             return CreatedAtAction(nameof(GetUser),
-            new { username = user.userName }, mapper.Map<PhotoDto>(photo));
+            new { username = user.UserName }, mapper.Map<PhotoDto>(photo));
 
         return BadRequest("problem accurs when adding photo");
     }
