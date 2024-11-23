@@ -29,7 +29,7 @@ public static class ApplicationServiceExtensions
 
         // registers UserRepository as the implementation for IUserRepository with a scoped lifetime
         services.AddScoped<IUserRepository, UserRepository>();
-
+        services.AddScoped<ILikeRepository, LikesRepository>();
         services.AddScoped<IPhotoService, PhotoService>();
 
         services.AddScoped<LogUserActivity>();
