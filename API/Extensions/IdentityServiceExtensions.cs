@@ -1,6 +1,9 @@
 using System;
 using System.Text;
+using API.Data;
+using API.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API.Extensions;
@@ -10,6 +13,16 @@ public static class IdentityServiceExtensions
     public static IServiceCollection AddIdentityServices(this IServiceCollection services,
        IConfiguration config)
     {
+        //sets up identity services
+        services.AddIdentityCore<AppUser>(opt =>
+        {
+            opt.Password.RequireNonAlphanumeric = false;
+        })
+        .AddRoles<AppRole>()
+        .AddRoleManager<RoleManager<AppRole>>()
+        .AddEntityFrameworkStores<DataContext>(); // for storing user and role data
+
+
         // Define Authentication Scheme
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options => //Configures how the application will handle and validate JWT tokens using specific options.
