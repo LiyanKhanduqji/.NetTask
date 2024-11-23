@@ -3,6 +3,7 @@ using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,9 +46,12 @@ public class LikesController(ILikeRepository LikesRepository) : BaseApiControlle
 
     [HttpGet]
     // A predicate is a condition used to determine what kind of data to fetch
-    public async Task<ActionResult<IEnumerable<MemberDto>>> GetUserLikes(string predicate)
+    public async Task<ActionResult<IEnumerable<MemberDto>>> GetUserLikes([FromQuery] LikesParams likesParams)
     {
-        var users = await LikesRepository.GetUserLikes(predicate, User.GetUserId());
+        likesParams.UserId = User.GetUserId();
+        var users = await LikesRepository.GetUserLikes(likesParams);
+
+        Response.AddPaginationHeader(users);
         return Ok(users);
     }
 }
