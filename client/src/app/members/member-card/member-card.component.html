@@ -1,9 +1,9 @@
 <div class="profile-card mb-4">
-  <div class="like-icon-overlay" (click)="toggleLike(member().id)">
+  <div class="like-icon-overlay" (click)="toggleLike()">
     <div class="heart-container">
       <i
         class="fa fa-heart heart-icon"
-        [ngClass]="{ liked: isLiked(member().id) }"
+        [ngClass]="{ liked: hasLiked() }"
       ></i>
     </div>
   </div>
