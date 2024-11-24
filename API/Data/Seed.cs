@@ -10,7 +10,7 @@ namespace API.Data;
 
 public class Seed
 {
-    public static async Task SeedUsers(UserManager<AppUser> userManager)
+    public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
     {
         // If there are already users in the database, it stops (returns) to avoid adding duplicate data
         if (await userManager.Users.AnyAsync()) return;
@@ -21,10 +21,36 @@ public class Seed
         var users = JsonSerializer.Deserialize<List<AppUser>>(userData, options);
 
         if (users == null) return;
+
+        var roles = new List<AppRole>{
+            new() {Name = "Member"},
+            new() {Name = "Admin"},
+            new() {Name = "Moderator"}
+        };
+
+        foreach (var role in roles)
+        {
+            await roleManager.CreateAsync(role);
+        }
+
         foreach (var user in users)
         {
-           await userManager.CreateAsync(user, "Liyan22Pa$$w0rd22");
+            user.UserName = user.UserName!.ToLower();
+            await userManager.CreateAsync(user, "Liyan22Pa$$w0rd22");
+            await userManager.AddToRoleAsync(user, "Member");
         }
+
+        var admin = new AppUser
+        {
+            UserName = "admin",
+            KnownAs = "Admin",
+            Gender = "",
+            City = "",
+            Country = ""
+        };
+
+        await userManager.CreateAsync(admin, "Liyan22Pa$$w0rd22");
+        await userManager.AddToRolesAsync(admin, ["Admin", "Moderator"]);
 
     }
 }

@@ -37,8 +37,9 @@ try
 {
     var context = services.GetRequiredService<DataContext>(); // retrieves the DataContext (the database context) that has been registered in the DI container.
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
     await context.Database.MigrateAsync(); //applies any pending migrations to the database
-    await Seed.SeedUsers(userManager);
+    await Seed.SeedUsers(userManager, roleManager);
 }
 catch (Exception ex)
 {

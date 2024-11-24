@@ -8,10 +8,11 @@ using API.DTOs;
 using Microsoft.EntityFrameworkCore;
 using API.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Controllers;
 
-public class AccountController(DataContext context, ITokenService tokenService, IMapper mapper) : BaseApiController
+public class AccountController(UserManager<AppUser> userManager, ITokenService tokenService, IMapper mapper) : BaseApiController
 {
     [HttpPost("register")] // the endpoint will be : account/register
 
@@ -20,11 +21,14 @@ public class AccountController(DataContext context, ITokenService tokenService, 
 
 
         if (await UserExists(registerDTO.username)) return BadRequest("User name is alraedy taken");
-        using var hmac = new HMACSHA512();
 
         var user = mapper.Map<AppUser>(registerDTO);
 
         user.UserName = registerDTO.username.ToLower();
+
+        var result = await userManager.CreateAsync(user, registerDTO.password);
+
+        if (!result.Succeeded) return BadRequest(result.Errors);
 
         // var user = new AppUser
         // {
@@ -32,9 +36,6 @@ public class AccountController(DataContext context, ITokenService tokenService, 
         //     PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.password)),
         //     PasswordSalt = hmac.Key
         // };
-
-        context.Users.Add(user);
-        await context.SaveChangesAsync();
 
         return new UserDTO
         {
@@ -48,7 +49,7 @@ public class AccountController(DataContext context, ITokenService tokenService, 
     private async Task<bool> UserExists(string username)
     {
         //x represents each individual user in the Users collection within context
-        return await context.Users.AnyAsync(x => x.NormalizedUserName == username.ToUpper());
+        return await userManager.Users.AnyAsync(x => x.NormalizedUserName == username.ToUpper());
 
         // ASP.NET Identity adds normalized versions of certain fields like the username and email (NormalizedUserName and NormalizedEmail). These fields are pre-stored in an uppercase format in the database
     }
@@ -62,9 +63,13 @@ public class AccountController(DataContext context, ITokenService tokenService, 
         // Users.FirstOrDefaultAsync : if the user not found, return default value (null)
         // Users.FirstAsync : throw exception if the user doesn't exist
         // Users.SingleOrDefaultAsync : find only exist users, and throw exception if there is more than one element matches
-        var user = await context.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.UserName == loginDTO.username.ToLower());
+        var user = await userManager.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.NormalizedUserName == loginDTO.username.ToUpper());
 
         if (user == null || user.UserName == null) return Unauthorized("Invalid username");
+
+        var result = await userManager.CheckPasswordAsync(user, loginDTO.password);
+
+        if (!result) return Unauthorized();
 
         return new UserDTO
         {
