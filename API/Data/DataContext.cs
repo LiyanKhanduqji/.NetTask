@@ -9,8 +9,8 @@ namespace API.Data;
 
 // This represents peimary constructor 
 public class DataContext(DbContextOptions options) : IdentityDbContext<AppUser, AppRole, int,
-        IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>,
-        IdentityRoleClaim<int>, IdentityUserToken<int>>(options)
+    IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>,
+    IdentityUserToken<int>>(options)
 {
         public DbSet<UserLike>? Likes { get; set; }
 
@@ -20,16 +20,16 @@ public class DataContext(DbContextOptions options) : IdentityDbContext<AppUser, 
                 base.OnModelCreating(builder);
 
                 builder.Entity<AppUser>()
-                .HasMany(ur => ur.UserRoles) //Specifies that each AppUser can have many AppUserRole
-                .WithOne(u => u.User) // each record in the AppUserRole table is linked to exactly one AppUser
-                .HasForeignKey(ur => ur.UserId) // Defines that the UserId property in AppUserRole is the foreign key referencing the AppUser table.
-                .IsRequired(); // a user must have associated roles
-
+           .HasMany(ur => ur.UserRoles)
+           .WithOne(u => u.User)
+           .HasForeignKey(ur => ur.UserId)
+           .IsRequired();
                 builder.Entity<AppRole>()
-                .HasMany(ur => ur.UserRoles)
-                .WithOne(u => u.Role)
-                .HasForeignKey(ur => ur.RoleId)
-                .IsRequired();
+                    .HasMany(ur => ur.UserRoles)
+                    .WithOne(u => u.Role)
+                    .HasForeignKey(ur => ur.RoleId)
+                    .IsRequired();
+
 
                 // defines a primary key combining SourceUserId and TargetUserId. This ensures each "like" is unique
                 builder.Entity<UserLike>()

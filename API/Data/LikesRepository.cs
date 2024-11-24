@@ -23,7 +23,7 @@ public class LikesRepository(DataContext context, IMapper mapper) : ILikeReposit
 
     public async Task<IEnumerable<int>> GetCurrentUserLikeIds(int currentUserId)
     {
-        return await context.Likes
+        return await context.Likes!
         .Where(x => x.SourceUserId == currentUserId)
         .Select(x => x.TargetUserId)
         .ToListAsync();
@@ -31,7 +31,7 @@ public class LikesRepository(DataContext context, IMapper mapper) : ILikeReposit
 
     public async Task<UserLike?> GetUserLike(int SourceUserId, int TargetUserId)
     {
-        return await context.Likes.FindAsync(SourceUserId, TargetUserId);
+        return await context.Likes!.FindAsync(SourceUserId, TargetUserId);
     }
 
     public async Task<PagedList<MemberDto>> GetUserLikes(LikesParams likesParams)
@@ -42,13 +42,13 @@ public class LikesRepository(DataContext context, IMapper mapper) : ILikeReposit
         switch (likesParams.Predicate)
         {
             case "liked":
-                query = likes
+                query = likes!
                 .Where(x => x.SourceUserId == likesParams.UserId)
                 .Select(x => x.TargetUser)
                 .ProjectTo<MemberDto>(mapper.ConfigurationProvider);
                 break;
             case "likedBy":
-                query = likes
+                query = likes!
                 .Where(x => x.TargetUserId == likesParams.UserId)
                 .Select(x => x.SourceUser)
                 .ProjectTo<MemberDto>(mapper.ConfigurationProvider);
@@ -56,7 +56,7 @@ public class LikesRepository(DataContext context, IMapper mapper) : ILikeReposit
 
             default:
                 var likeIds = await GetCurrentUserLikeIds(likesParams.UserId);
-                query = likes.Where(x => x.TargetUserId == likesParams.UserId && likeIds.Contains(x.SourceUserId))
+                query = likes!.Where(x => x.TargetUserId == likesParams.UserId && likeIds.Contains(x.SourceUserId))
                 .Select(x => x.SourceUser)
                 .ProjectTo<MemberDto>(mapper.ConfigurationProvider);
                 break;

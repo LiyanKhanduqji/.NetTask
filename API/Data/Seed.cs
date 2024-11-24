@@ -3,16 +3,17 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using API.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data;
 
 public class Seed
 {
-    public static async Task SeedUsers(DataContext context)
+    public static async Task SeedUsers(UserManager<AppUser> userManager)
     {
         // If there are already users in the database, it stops (returns) to avoid adding duplicate data
-        if (await context.Users.AnyAsync()) return;
+        if (await userManager.Users.AnyAsync()) return;
 
         var userData = await File.ReadAllTextAsync("Data/UserSeedData.json");
         var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -22,14 +23,8 @@ public class Seed
         if (users == null) return;
         foreach (var user in users)
         {
-            using var hmac = new HMACSHA512();
-            // Sets each user’s password hash (PasswordHash) and salt (PasswordSalt) based on the text "Pa$$w0rd"
-            // Adds each user to the Users table in the databas
-            context.Users.Add(user);
+           await userManager.CreateAsync(user, "Liyan22Pa$$w0rd22");
         }
-
-        // saves all added users to the database.
-        await context.SaveChangesAsync();
 
     }
 }

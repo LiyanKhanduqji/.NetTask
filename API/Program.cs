@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using API.Middleware;
+using Microsoft.AspNetCore.Identity;
+using API.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,8 +36,9 @@ var services = scope.ServiceProvider; // is a container that holds all the servi
 try
 {
     var context = services.GetRequiredService<DataContext>(); // retrieves the DataContext (the database context) that has been registered in the DI container.
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
     await context.Database.MigrateAsync(); //applies any pending migrations to the database
-    await Seed.SeedUsers(context);
+    await Seed.SeedUsers(userManager);
 }
 catch (Exception ex)
 {

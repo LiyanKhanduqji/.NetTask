@@ -15,12 +15,13 @@ public static class IdentityServiceExtensions
     {
         //sets up identity services
         services.AddIdentityCore<AppUser>(opt =>
-        {
-            opt.Password.RequireNonAlphanumeric = false;
-        })
-        .AddRoles<AppRole>()
-        .AddRoleManager<RoleManager<AppRole>>()
-        .AddEntityFrameworkStores<DataContext>(); // for storing user and role data
+         {
+             opt.Password.RequireNonAlphanumeric = false;
+         })
+             .AddRoles<AppRole>()
+             .AddRoleManager<RoleManager<AppRole>>()
+             .AddEntityFrameworkStores<DataContext>();
+
 
 
         // Define Authentication Scheme
