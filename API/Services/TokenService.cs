@@ -4,13 +4,14 @@ using System.Security.Claims;
 using System.Text;
 using API.Entities;
 using API.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API.Services;
 
-public class TokenService(IConfiguration config) : ITokenService
+public class TokenService(IConfiguration config, UserManager<AppUser> userManager) : ITokenService
 {
-    string ITokenService.CreateToken(AppUser user)
+    public async Task<String> CreateToken(AppUser user)
     {
         // Retrieve the Secret Key
         var tokenKey = config["TokenKey"] ?? throw new Exception("Can't Access Token Key");
@@ -28,6 +29,9 @@ public class TokenService(IConfiguration config) : ITokenService
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new(ClaimTypes.Name, user.UserName)
         };
+
+        var roles = await userManager.GetRolesAsync(user);
+        claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
         // SigningCredentials are created using the security key and the HMAC SHA512 encryption algorithm.
         // credentials ensure that the token can be validated as authentic, allowing the server to detect if it has been altered.

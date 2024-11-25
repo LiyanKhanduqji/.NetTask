@@ -21,6 +21,7 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
 
     //allow access to a login or register without requiring authentication
     // [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers([FromQuery] UserParams userParams)
     {
@@ -37,6 +38,7 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
     }
 
     // [HttpGet("{Id:int}")] instead of this use:
+    [Authorize(Roles = "Member")]
     [HttpGet("{username}")]
     public async Task<ActionResult<MemberDto>> GetUser(string username)
     {
