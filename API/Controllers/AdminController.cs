@@ -23,7 +23,7 @@ public class AdminController(UserManager<AppUser> userManager) : BaseApiControll
             }).ToListAsync();
         return Ok(users);
     }
-    [Authorize(Policy = "RequireAdminRole")]
+    [Authorize(Policy = "RequiredAdminRole")]
     [HttpPost("edit-roles/{username}")]
     public async Task<ActionResult> EditRoles(string username, string roles)
     {
