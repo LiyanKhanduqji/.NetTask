@@ -19,16 +19,18 @@
       <p class="profile-last-active">
         Last Active: {{ member.lastActive | timeago }}
       </p>
-      <p class="profile-created-at">Joined: {{ member.created | date: 'dd-mm-yyyy' }}</p>
+      <p class="profile-created-at">
+        Joined: {{ member.created | date : "dd-mm-yyyy" }}
+      </p>
     </div>
 
-    <div class="profile-footer">
+    <!-- <div class="profile-footer">
       <button class="btn btn-like">
         <span class="heart-icon">&#10084;</span> Like
       </button>
 
       <button class="btn btn-outline">Message</button>
-    </div>
+    </div> -->
   </div>
 
   <div class="col-8 mt-5 tabs-section">
@@ -44,7 +46,7 @@
         <p>{{ member.interests }}</p>
       </tab>
 
-      <tab heading="Photos" #photoTab="tab">
+      <!-- <tab heading="Photos" #photoTab="tab">
         @if (photoTab.active) {
         <gallery [items]="images" class="gallery"></gallery>
         }
@@ -52,7 +54,7 @@
 
       <tab heading="Messages">
         <h4>Messages will go here</h4>
-      </tab>
+      </tab> -->
     </tabset>
   </div>
 </div>
